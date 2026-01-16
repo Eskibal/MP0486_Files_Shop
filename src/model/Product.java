@@ -1,32 +1,65 @@
 package model;
 
+import javax.persistence.Entity;
+import javax.persistence.Table;
+import javax.persistence.Id;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Column;
+import javax.persistence.Transient;
+
+@Entity
+@Table(name = "inventory")
 public class Product {
-	private int id;
-    private String name;
-    private Amount publicPrice;
-    private Amount wholesalerPrice;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id", nullable = false)
+	private Integer id;
+	
+	@Column(name = "available")
     private boolean available;
+	
+	@Column(name = "name")
+    private String name;
+	
+	@Column(name = "price")
+    private double price;
+	
+	@Transient
+    private Amount publicPrice;
+	
+	@Transient
+    private Amount wholesalerPrice;
+	
+	@Column(name = "stock")
     private int stock;
-    private static int totalProducts;
     
+	@Transient
+    private static int totalProducts;
+
+	
+	@Transient
     public final static double EXPIRATION_RATE=0.60;
     
-	public Product(String name, Amount wholesalerPrice, boolean available, int stock) {
+	public Product() {}
+	
+	public Product(String name, boolean available, double price, int stock) {
 		super();
 		this.id = totalProducts+1;
 		this.name = name;
+		this.available = available;
+		this.price = price;
 		this.wholesalerPrice = wholesalerPrice;
 		this.publicPrice = new Amount(wholesalerPrice.getValue() * 2);
-		this.available = available;
 		this.stock = stock;
 		totalProducts++;
 	}
 
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
@@ -38,7 +71,13 @@ public class Product {
 		this.name = name;
 	}
 
-	
+	public double getPrice() {
+		return price;
+	}
+
+	public void setPrice(double price) {
+		this.price = price;
+	}
 
 	public Amount getPublicPrice() {
 		return publicPrice;

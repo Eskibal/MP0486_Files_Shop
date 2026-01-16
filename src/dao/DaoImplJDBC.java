@@ -31,7 +31,6 @@ public class DaoImplJDBC implements Dao {
 	}
 
 
-
 	@Override
 	public ArrayList<Product> getInventory() {
 		ArrayList<Product> inventory = new ArrayList<Product>();
@@ -40,7 +39,11 @@ public class DaoImplJDBC implements Dao {
 		try (Statement stmt = conn.createStatement()) {
 			try (ResultSet rs = stmt.executeQuery(query)) {
 				while (rs.next()) {
-					inventory.add(new Product(rs.getString("name"), new Amount(rs.getDouble("wholesalerPrice")), rs.getBoolean("available"), rs.getInt("stock")));
+					inventory.add(new Product(rs.getString("name"), rs.getBoolean("available"), rs.getDouble("price"), rs.getInt("stock")));
+					
+					for (Product i : inventory) {
+						System.out.println(i);
+					}
 				}
 			}
 		} catch (SQLException e)
@@ -126,11 +129,11 @@ public class DaoImplJDBC implements Dao {
 	}
 
 	@Override
-	public void deleteProduct(int productId) {
+	public void deleteProduct(String productName) {
 		String query = "delete from inventory where id = ?";
 		
 		try (PreparedStatement ps = conn.prepareStatement(query)) {
-			ps.setInt(1, productId);
+			ps.setString(1, productName);
 			ps.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();

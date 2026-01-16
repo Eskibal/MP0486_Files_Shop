@@ -17,8 +17,8 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-// import dao.DaoImplFile;
-import dao.DaoImplJDBC;
+import dao.Dao;
+import dao.DaoImplHibernate;
 
 public class Shop {
 	private Amount cash = new Amount(100.00);
@@ -28,16 +28,14 @@ public class Shop {
 //	private Sale[] sales;
 	private ArrayList<Sale> sales;
 	private int numberSales;
-//	private DaoImplFile dao;
-	private DaoImplJDBC dao;
+	private Dao dao;
 
 	final static double TAX_RATE = 1.04;
 
 	public Shop() {
-//		dao = new DaoImplFile();
-		dao = new DaoImplJDBC();
 		inventory = new ArrayList<Product>();
 		sales = new ArrayList<Sale>();
+		dao = new DaoImplHibernate();
 	}
 
 	public Amount getCash() {
@@ -164,7 +162,7 @@ public class Shop {
 
 	private void initSession() {
 		// TODO Auto-generated method stub
-
+		
 		Employee employee = new Employee("test");
 		boolean logged = false;
 
@@ -230,11 +228,11 @@ public class Shop {
 		System.out.print("Nombre: ");
 		String name = scanner.nextLine();
 		System.out.print("Precio mayorista: ");
-		double wholesalerPrice = scanner.nextDouble();
+		double price = scanner.nextDouble();
 		System.out.print("Stock: ");
 		int stock = scanner.nextInt();
 
-		addProduct(new Product(name, new Amount(wholesalerPrice), true, stock));
+		addProduct(new Product(name, true, price, stock));
 	}
 
 	/**
@@ -494,10 +492,10 @@ public class Shop {
 	/**
 	 * delete a product from inventory
 	 * 
-	 * @param productId
+	 * @param productName
 	 */
-	public void deleteProduct(int productId) {
-		dao.deleteProduct(productId);
+	public void deleteProduct(String productName) {
+		dao.deleteProduct(productName);
 		numberProducts--;
 	}
 	

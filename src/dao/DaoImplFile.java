@@ -18,6 +18,7 @@ public class DaoImplFile implements Dao {
 
 	ArrayList<Product> inventory = new ArrayList<Product>();
 
+
 	@Override
 	public void connect() {
 
@@ -43,7 +44,7 @@ public class DaoImplFile implements Dao {
 				String[] sections = line.split(";");
 
 				String name = "";
-				double wholesalerPrice = 0.0;
+				double price = 0.0;
 				int stock = 0;
 
 				// read each sections
@@ -59,7 +60,7 @@ public class DaoImplFile implements Dao {
 
 					case 1:
 						// format price
-						wholesalerPrice = Double.parseDouble(data[1]);
+						price = Double.parseDouble(data[1]);
 						break;
 
 					case 2:
@@ -73,7 +74,7 @@ public class DaoImplFile implements Dao {
 
 				}
 
-				inventory.add(new Product(name, new Amount(wholesalerPrice), true, stock));
+				inventory.add(new Product(name, true, price, stock));
 				line = br.readLine();
 			}
 			fr.close();
@@ -159,7 +160,7 @@ public class DaoImplFile implements Dao {
 	}
 
 	@Override
-	public void deleteProduct(int productId) {
+	public void deleteProduct(String productName) {
 		// TODO Auto-generated method stub
 		
 	}

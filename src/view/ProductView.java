@@ -185,8 +185,8 @@ public class ProductView extends JDialog implements ActionListener {
 					JOptionPane.showMessageDialog(null, "Producto ya existe ", "Error", JOptionPane.ERROR_MESSAGE);
 
 				} else {
-					product = new Product(textFieldName.getText(),
-							new Amount(Double.parseDouble(textFieldPrice.getText())), true,
+					product = new Product(textFieldName.getText(), true,
+							Double.parseDouble(textFieldPrice.getText()),
 							Integer.parseInt(textFieldStock.getText()));
 					shop.addProduct(product);
 					JOptionPane.showMessageDialog(null, "Producto añadido ", "Information",
@@ -218,15 +218,14 @@ public class ProductView extends JDialog implements ActionListener {
 			case Constants.OPTION_REMOVE_PRODUCT:
 				// check product exists
 				product = shop.findProduct(textFieldName.getText());
-				int productId = (int) spinnerId.getModel().getValue();
 				
-				if (product == null && productId == 0) {
+				if (product == null) {
 					JOptionPane.showMessageDialog(null, "Producto no existe ", "Error", JOptionPane.ERROR_MESSAGE);
 
 				} else {
 					shop.getInventory().remove(product);
 					
-					shop.deleteProduct(productId);
+					shop.deleteProduct(product.getName());
 					JOptionPane.showMessageDialog(null, "Producto eliminado", "Information",
 							JOptionPane.INFORMATION_MESSAGE);
 					// release current screen
