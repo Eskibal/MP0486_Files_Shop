@@ -494,7 +494,7 @@ public class Shop {
 	 * 
 	 * @param productName
 	 */
-	public void deleteProduct(String productName) {
+	public void deleteProduct(Product productName) {
 		dao.deleteProduct(productName);
 		numberProducts--;
 	}

@@ -28,7 +28,6 @@ public class ProductView extends JDialog implements ActionListener {
 	private int option;
 	private JButton okButton;
 	private JButton cancelButton;
-	private JSpinner spinnerId;
 	private JTextField textFieldName;
 	private JTextField textFieldStock;
 	private JTextField textFieldPrice;
@@ -86,7 +85,7 @@ public class ProductView extends JDialog implements ActionListener {
 		textFieldName.setBounds(169, 10, 136, 25);
 		contentPanel.add(textFieldName);
 		textFieldName.setColumns(10);
-		if (option == Constants.OPTION_ADD_PRODUCT || option == Constants.OPTION_ADD_STOCK) {
+		if (option == Constants.OPTION_ADD_PRODUCT || option == Constants.OPTION_ADD_STOCK || option == Constants.OPTION_REMOVE_PRODUCT) {
 			lblName.setVisible(true);
 			textFieldName.setVisible(true);
 		} else {
@@ -133,24 +132,6 @@ public class ProductView extends JDialog implements ActionListener {
 			textFieldPrice.setVisible(false);
 		}
 
-		// id section
-		JLabel lblId = new JLabel("Id producto:");
-		lblId.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lblId.setBounds(33, 50, 119, 19);
-		contentPanel.add(lblId);
-		spinnerId = new JSpinner();
-		spinnerId.setAlignmentX(SwingConstants.RIGHT);
-		spinnerId.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		spinnerId.setBounds(169, 50, 136, 25);
-		contentPanel.add(spinnerId);
-		if (option == Constants.OPTION_REMOVE_PRODUCT) {
-			lblId.setVisible(true);
-			spinnerId.setVisible(true);
-		} else {
-			lblId.setVisible(false);
-			spinnerId.setVisible(false);
-		}
-		
 		{
 			JPanel buttonPane = new JPanel();
 			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
@@ -222,10 +203,8 @@ public class ProductView extends JDialog implements ActionListener {
 				if (product == null) {
 					JOptionPane.showMessageDialog(null, "Producto no existe ", "Error", JOptionPane.ERROR_MESSAGE);
 
-				} else {
-					shop.getInventory().remove(product);
-					
-					shop.deleteProduct(product.getName());
+				} else {					
+					shop.deleteProduct(product);
 					JOptionPane.showMessageDialog(null, "Producto eliminado", "Information",
 							JOptionPane.INFORMATION_MESSAGE);
 					// release current screen

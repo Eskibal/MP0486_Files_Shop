@@ -160,7 +160,7 @@ public class DaoImplFile implements Dao {
 	}
 
 	@Override
-	public void deleteProduct(String productName) {
+	public void deleteProduct(Product productName) {
 		// TODO Auto-generated method stub
 		
 	}

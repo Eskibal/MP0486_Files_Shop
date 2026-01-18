@@ -49,8 +49,6 @@ public class Product {
 		this.name = name;
 		this.available = available;
 		this.price = price;
-		this.wholesalerPrice = wholesalerPrice;
-		this.publicPrice = new Amount(wholesalerPrice.getValue() * 2);
 		this.stock = stock;
 		totalProducts++;
 	}
@@ -125,8 +123,7 @@ public class Product {
 
 	@Override
 	public String toString() {
-		return "Product [name=" + name + ", publicPrice=" + publicPrice + ", wholesalerPrice=" + wholesalerPrice
-				+ ", available=" + available + ", stock=" + stock + "]";
+		return "Product [name=" + name + ", price=" + price + ", available=" + available + ", stock=" + stock + "]";
 	}
 
 	

@@ -81,25 +81,68 @@ public class DaoImplHibernate implements Dao {
 
 	@Override
 	public void addProduct(Product product) {
-		// TODO Auto-generated method stub
+		try {
+			tr = session.beginTransaction();
+			
+			session.save(product);
+			
+			tr.commit();
+		} catch (HibernateException e) {
+			if (tr != null)
+				tr.rollback();
+			e.printStackTrace();
+		}
 
 	}
 
 	@Override
 	public void updateProduct(Product product) {
-		// TODO Auto-generated method stub
-
+		product.setStock(product.getStock());
+		
+		try {
+			tr = session.beginTransaction();
+			
+			session.save(product);
+			
+			tr.commit();
+		} catch (HibernateException e) {
+			if (tr != null)
+				tr.rollback();
+			e.printStackTrace();
+		}
 	}
 
 	@Override
-	public void deleteProduct(String productName) {
-		// TODO Auto-generated method stub
-
+	public void deleteProduct(Product productName) {			
+		try {
+			tr = session.beginTransaction();
+			
+			session.remove(productName);
+			
+			tr.commit();
+		} catch (HibernateException e) {
+			if (tr != null)
+				tr.rollback();
+			e.printStackTrace();
+		}
 	}
 
 	@Override
 	public Employee getEmployee(int employeeId, String password) {
-		// TODO Auto-generated method stub
+		try {
+			tr = session.beginTransaction();
+			
+			Employee employee = session.get(Employee.class, employeeId);
+			
+			tr.commit();
+			
+			return employee;
+			
+		} catch (HibernateException e) {
+			if (tr != null)
+				tr.rollback();
+			e.printStackTrace();
+		}
 		return null;
 	}
 
