@@ -18,7 +18,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 import dao.Dao;
-import dao.DaoImplHibernate;
+import dao.DaoImplMongoDB;
 
 public class Shop {
 	private Amount cash = new Amount(100.00);
@@ -35,7 +35,7 @@ public class Shop {
 	public Shop() {
 		inventory = new ArrayList<Product>();
 		sales = new ArrayList<Sale>();
-		dao = new DaoImplHibernate();
+		dao = new DaoImplMongoDB();
 	}
 
 	public Amount getCash() {
